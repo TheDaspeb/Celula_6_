@@ -1,0 +1,17 @@
+[
+    {
+        "id": 2,
+        "nombre": "pepe",
+        "edad": 24
+    },
+    {
+        "id": 3,
+        "nombre": "alfonso",
+        "edad": 25
+    },
+    {
+        "id": 3,
+        "nombre": "pedrito el escamosito",
+        "edad": 24
+    }
+]
