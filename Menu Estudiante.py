@@ -134,7 +134,7 @@ def eliminar():
         return
 
     guardar_datos(nuevos)
-    print("🗑️ Estudiante eliminado.")
+    print(" Estudiante eliminado.")
 
 def Agregar_csv():
     with open('estudiantes.json', 'r') as listados_json:
@@ -147,6 +147,7 @@ def Agregar_csv():
         writer.writeheader()
         for i in nombre:
             writer.writerow(i)
+        print('Estiduantes guardados')
 
 # ---------------------------
 # MENÚ PRINCIPAL
@@ -177,7 +178,7 @@ def menu():
         elif opcion == "4":
             eliminar()
         elif opcion == "5":
-            Agregar_csv
+            Agregar_csv()
         elif opcion == '6':
             print('👋 Saliendo...')
             break
