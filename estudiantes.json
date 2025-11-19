@@ -1,12 +1,17 @@
 [
     {
         "id": 1,
-        "nombre": "Daniel",
+        "nombre": "Daniel Perez",
         "edad": 23
     },
     {
         "id": 2,
-        "nombre": "Joselito",
-        "edad": 21
+        "nombre": "Daniel Perez",
+        "edad": 23
+    },
+    {
+        "id": 3,
+        "nombre": "caca",
+        "edad": 45
     }
 ]

@@ -12,7 +12,7 @@ def leer_datos():
         return []
 
     try:
-        with open(ARCHIVO, "r", encoding="utf-8") as f:
+        with open(ARCHIVO, "r", encoding="utf-8") as f:   # CORREGIDO
             return json.load(f)
     except:
         return []
@@ -24,7 +24,6 @@ def guardar_datos(lista):
     with open(ARCHIVO, "w", encoding="utf-8") as f:
         json.dump(lista, f, indent=4, ensure_ascii=False)
 
-
 # ---------------------------
 # CREAR ESTUDIANTE
 # ---------------------------
@@ -35,11 +34,11 @@ def crear():
     edad = input("Edad: ").strip()
 
     if not nombre:
-        print(" El nombre no puede estar vacío.")
+        print("❌ El nombre no puede estar vacío.")
         return
 
     if not edad.isdigit():
-        print(" La edad debe ser un número.")
+        print("❌ La edad debe ser un número.")
         return
 
     nuevo_id = 1 if not estudiantes else estudiantes[-1]["id"] + 1
@@ -53,8 +52,7 @@ def crear():
     estudiantes.append(nuevo)
     guardar_datos(estudiantes)
 
-    print(" Estudiante creado.")
-
+    print("✅ Estudiante creado.")
 
 # ---------------------------
 # MOSTRAR ESTUDIANTES
@@ -66,11 +64,10 @@ def mostrar():
         print("\nNo hay estudiantes registrados.\n")
         return
 
-    print("\n LISTA DE ESTUDIANTES:")
+    print("\n📚 LISTA DE ESTUDIANTES:")
     for est in estudiantes:
         print(f"ID: {est['id']} | Nombre: {est['nombre']} | Edad: {est['edad']}")
     print()
-
 
 # ---------------------------
 # ACTUALIZAR ESTUDIANTE
@@ -86,7 +83,7 @@ def actualizar():
     try:
         id_buscar = int(input("ID del estudiante a actualizar: "))
     except:
-        print(" ID inválido.")
+        print("❌ ID inválido.")
         return
 
     for est in estudiantes:
@@ -101,14 +98,13 @@ def actualizar():
                 if nueva_edad.isdigit():
                     est["edad"] = int(nueva_edad)
                 else:
-                    print(" Edad inválida.")
+                    print("❌ Edad inválida.")
 
             guardar_datos(estudiantes)
-            print(" Estudiante actualizado.")
+            print("✅ Estudiante actualizado.")
             return
 
-    print(" No existe un estudiante con ese ID.")
-
+    print("❌ No existe un estudiante con ese ID.")
 
 # ---------------------------
 # ELIMINAR ESTUDIANTE
@@ -124,29 +120,36 @@ def eliminar():
     try:
         id_buscar = int(input("ID del estudiante a eliminar: "))
     except:
-        print(" ID inválido.")
+        print("❌ ID inválido.")
         return
 
     nuevos = [est for est in estudiantes if est["id"] != id_buscar]
 
     if len(nuevos) == len(estudiantes):
-        print(" No existe un estudiante con ese ID.")
+        print("❌ No existe un estudiante con ese ID.")
         return
 
     guardar_datos(nuevos)
     print("🗑️ Estudiante eliminado.")
 
-def Agregar_csv():
-    with open('estudiantes.json', 'r') as listados_json:
-        nombre =json.load(listados_json)
+# ---------------------------
+# GUARDAR CSV
+# ---------------------------
+def guardar_csv():
+    estudiantes = leer_datos()
 
-    nombre_grupo = nombre[0].keys()
+    if not estudiantes:
+        print("No hay datos para exportar.")
+        return
 
-    with open('datos.csv', "w", newline='', encoding='utf-8') as listado_csv:
-        writer = csv.DictWriter(listado_csv, fieldnames=nombre_grupo)
+    fieldnames = estudiantes[0].keys()
+
+    with open("datos.csv", "w", newline="", encoding="utf-8") as listado_csv:
+        writer = csv.DictWriter(listado_csv, fieldnames=fieldnames)
         writer.writeheader()
-        for i in nombre:
-            writer.writerow(i)
+        writer.writerows(estudiantes)
+
+    print("✅ Archivo CSV generado: datos.csv")
 
 # ---------------------------
 # MENÚ PRINCIPAL
@@ -161,7 +164,7 @@ def menu():
 2. Crear estudiante
 3. Actualizar estudiante
 4. Eliminar estudiante
-5. Guardar CSV             
+5. Guardar CSV
 6. Salir
 =========================
 """)
@@ -171,18 +174,17 @@ def menu():
         if opcion == "1":
             mostrar()
         elif opcion == "2":
-           crear()
+            crear()
         elif opcion == "3":
             actualizar()
         elif opcion == "4":
             eliminar()
         elif opcion == "5":
-            Agregar_csv
-        elif opcion == '6':
-            print('👋 Saliendo...')
+            guardar_csv()  # AHORA SÍ
+        elif opcion == "6":
+            print("👋 Saliendo...")
             break
         else:
-            print(" Opción inválida.")
-
+            print("❌ Opción inválida.")
 
 menu()
